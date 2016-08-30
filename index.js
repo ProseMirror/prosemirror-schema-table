@@ -1,6 +1,5 @@
 const {Block, Attribute, Fragment, Slice} = require("../model")
 const {Step, StepResult, PosMap, ReplaceStep} = require("../transform")
-const {copyObj} = require("../util/obj")
 const {Selection} = require("../state")
 
 // ;; A table node type. Has one attribute, **`columns`**, which holds
@@ -56,8 +55,7 @@ exports.addTableNodes = addTableNodes
 // :: (NodeType, number, number, ?Object) → Node
 // Create a table node with the given number of rows and columns.
 function createTable(nodeType, rows, columns, attrs) {
-  attrs = attrs ? copyObj(attrs) : Object.create(null)
-  attrs.columns = columns
+  attrs = setColumns(attrs, columns)
   let rowType = nodeType.contentExpr.elements[0].nodeTypes[0]
   let cellType = rowType.contentExpr.elements[0].nodeTypes[0]
   let cell = cellType.createAndFill(), cells = []
@@ -70,10 +68,15 @@ exports.createTable = createTable
 
 // Steps to add and remove a column
 
+function setColumns(attrs, columns) {
+  let result = Object.create(null)
+  if (attrs) for (let prop in attrs) result[prop] = attrs[prop]
+  result.columns = columns
+  return result
+}
+
 function adjustColumns(attrs, diff) {
-  let copy = copyObj(attrs)
-  copy.columns = attrs.columns + diff
-  return copy
+  return setColumns(attrs, attrs.columns + diff)
 }
 
 // ;; A `Step` subclass for adding a column to a table in a single
