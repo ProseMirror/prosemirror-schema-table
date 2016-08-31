@@ -2,7 +2,7 @@ const {Block, Attribute, Fragment, Slice} = require("../model")
 const {Step, StepResult, PosMap, ReplaceStep} = require("../transform")
 const {Selection} = require("../state")
 
-// ;; A table node type. Has one attribute, **`columns`**, which holds
+// ::- A table node type. Has one attribute, **`columns`**, which holds
 // a number indicating the amount of columns in the table.
 class Table extends Block {
   get attrs() { return {columns: new Attribute({default: 1})} }
@@ -19,7 +19,7 @@ class Table extends Block {
 }
 exports.Table = Table
 
-// ;; A table row node type. Has one attribute, **`columns`**, which
+// ::- A table row node type. Has one attribute, **`columns`**, which
 // holds a number indicating the amount of columns in the table.
 class TableRow extends Block {
   get attrs() { return {columns: new Attribute({default: 1})} }
@@ -30,7 +30,7 @@ class TableRow extends Block {
 }
 exports.TableRow = TableRow
 
-// ;; A table cell node type.
+// ::- A table cell node type.
 class TableCell extends Block {
   toDOM() { return ["td", 0] }
   get matchDOMTag() { return {"td": null} }
@@ -79,7 +79,7 @@ function adjustColumns(attrs, diff) {
   return setColumns(attrs, attrs.columns + diff)
 }
 
-// ;; A `Step` subclass for adding a column to a table in a single
+// ::- A `Step` subclass for adding a column to a table in a single
 // atomic step.
 class AddColumnStep extends Step {
   constructor(positions, cells) {
@@ -174,7 +174,7 @@ exports.AddColumnStep = AddColumnStep
 
 Step.jsonID("addTableColumn", AddColumnStep)
 
-// ;; A subclass of `Step` that removes a column from a table.
+// ::- A subclass of `Step` that removes a column from a table.
 class RemoveColumnStep extends Step {
   constructor(from, to) {
     super()
