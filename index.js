@@ -273,7 +273,7 @@ function findRow($pos, pred) {
   return -1
 }
 
-// :: (EditorState, onAction: ?(action: Object)) → bool
+// :: (EditorState, onAction: ?(action: Action)) → bool
 // Command function that adds a column before the column with the
 // selection.
 function addColumnBefore(state, onAction) {
@@ -287,7 +287,7 @@ function addColumnBefore(state, onAction) {
 }
 exports.addColumnBefore = addColumnBefore
 
-// :: (EditorState, onAction: ?(action: Object)) → bool
+// :: (EditorState, onAction: ?(action: Action)) → bool
 // Command function that adds a column after the column with the
 // selection.
 function addColumnAfter(state, onAction) {
@@ -302,7 +302,7 @@ function addColumnAfter(state, onAction) {
 }
 exports.addColumnAfter = addColumnAfter
 
-// :: (EditorState, onAction: ?(action: Object)) → bool
+// :: (EditorState, onAction: ?(action: Action)) → bool
 // Command function that removes the column with the selection.
 function removeColumn(state, onAction) {
   let $from = state.selection.$from
@@ -328,7 +328,7 @@ function addRow(state, onAction, side) {
   return true
 }
 
-// :: (EditorState, onAction: ?(action: Object)) → bool
+// :: (EditorState, onAction: ?(action: Action)) → bool
 // Command function that adds a row after the row with the
 // selection.
 function addRowBefore(state, onAction) {
@@ -336,7 +336,7 @@ function addRowBefore(state, onAction) {
 }
 exports.addRowBefore = addRowBefore
 
-// :: (EditorState, onAction: ?(action: Object)) → bool
+// :: (EditorState, onAction: ?(action: Action)) → bool
 // Command function that adds a row before the row with the
 // selection.
 function addRowAfter(state, onAction) {
@@ -344,7 +344,7 @@ function addRowAfter(state, onAction) {
 }
 exports.addRowAfter = addRowAfter
 
-// :: (EditorState, onAction: ?(action: Object)) → bool
+// :: (EditorState, onAction: ?(action: Action)) → bool
 // Command function that removes the row with the selection.
 function removeRow(state, onAction) {
   let $from = state.selection.$from
@@ -378,12 +378,12 @@ function moveCell(state, dir, onAction) {
   }
 }
 
-// :: (EditorState, onAction: ?(action: Object)) → bool
+// :: (EditorState, onAction: ?(action: Action)) → bool
 // Move to the next cell in the current table, if there is one.
 function selectNextCell(state, onAction) { return moveCell(state, 1, onAction) }
 exports.selectNextCell = selectNextCell
 
-// :: (EditorState, onAction: ?(action: Object)) → bool
+// :: (EditorState, onAction: ?(action: Action)) → bool
 // Move to the previous cell in the current table, if there is one.
 function selectPreviousCell(state, onAction) { return moveCell(state, -1, onAction) }
 exports.selectPreviousCell = selectPreviousCell
