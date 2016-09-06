@@ -1,6 +1,6 @@
-const {Block, Attribute, Fragment, Slice} = require("../model")
-const {Step, StepResult, PosMap, ReplaceStep} = require("../transform")
-const {Selection} = require("../state")
+const {Block, Attribute, Fragment, Slice} = require("prosemirror-model")
+const {Step, StepResult, PosMap, ReplaceStep} = require("prosemirror-transform")
+const {Selection} = require("prosemirror-state")
 
 // ::- A table node type. Has one attribute, **`columns`**, which holds
 // a number indicating the amount of columns in the table.
