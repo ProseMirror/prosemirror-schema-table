@@ -7,14 +7,14 @@ const {Selection} = require("prosemirror-state")
 // a number indicating the amount of columns in the table.
 const table = {
   attrs: {columns: {default: 1}},
-  toDOM() { return ["table", ["tbody", 0]] },
-  matchDOMTag: {"table": dom => {
+  parseDOM: [{tag: "table", getAttrs(dom) {
     let row = dom.querySelector("tr")
     if (!row || !row.children.length) return false
     // FIXME using the child count as column width is problematic
     // when parsing document fragments
     return {columns: row.children.length}
-  }}
+  }}],
+  toDOM() { return ["table", ["tbody", 0]] }
 }
 exports.table = table
 
@@ -23,8 +23,8 @@ exports.table = table
 // holds a number indicating the amount of columns in the table.
 const tableRow = {
   attrs: {columns: {default: 1}},
+  parseDOM: [{tag: "tr", getAttrs: dom => dom.children.length ? {columns: dom.children.length} : false}],
   toDOM() { return ["tr", 0] },
-  matchDOMTag: {"tr": dom => dom.children.length ? {columns: dom.children.length} : false},
   tableRow: true
 }
 exports.tableRow = tableRow
@@ -32,8 +32,8 @@ exports.tableRow = tableRow
 // :: NodeSpec
 // A table cell node spec.
 const tableCell = {
-  toDOM() { return ["td", 0] },
-  matchDOMTag: {"td": null}
+  parseDOM: [{tag: "td"}],
+  toDOM() { return ["td", 0] }
 }
 exports.tableCell = tableCell
 
