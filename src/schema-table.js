@@ -1,41 +1,48 @@
-const {Block, Attribute, Fragment, Slice} = require("prosemirror-model")
+const {Fragment, Slice} = require("prosemirror-model")
 const {Step, StepResult, PosMap, ReplaceStep} = require("prosemirror-transform")
 const {Selection} = require("prosemirror-state")
 
-// ::- A table node type. Has one attribute, **`columns`**, which holds
+// :: NodeSpec
+// A table node spec. Has one attribute, **`columns`**, which holds
 // a number indicating the amount of columns in the table.
-class Table extends Block {
-  get attrs() { return {columns: new Attribute({default: 1})} }
-  toDOM() { return ["table", ["tbody", 0]] }
-  get matchDOMTag() {
-    return {"table": dom => {
-      let row = dom.querySelector("tr")
-      if (!row || !row.children.length) return false
-      // FIXME using the child count as column width is problematic
-      // when parsing document fragments
-      return {columns: row.children.length}
-    }}
-  }
+const table = {
+  attrs: {columns: {default: 1}},
+  toDOM() { return ["table", ["tbody", 0]] },
+  matchDOMTag: {"table": dom => {
+    let row = dom.querySelector("tr")
+    if (!row || !row.children.length) return false
+    // FIXME using the child count as column width is problematic
+    // when parsing document fragments
+    return {columns: row.children.length}
+  }}
 }
-exports.Table = Table
+exports.table = table
 
-// ::- A table row node type. Has one attribute, **`columns`**, which
+// :: NodeSpec
+// A table row node spec. Has one attribute, **`columns`**, which
 // holds a number indicating the amount of columns in the table.
-class TableRow extends Block {
-  get attrs() { return {columns: new Attribute({default: 1})} }
-  toDOM() { return ["tr", 0] }
-  get matchDOMTag() {
-    return {"tr": dom => dom.children.length ? {columns: dom.children.length} : false}
-  }
+const tableRow = {
+  attrs: {columns: {default: 1}},
+  toDOM() { return ["tr", 0] },
+  matchDOMTag: {"tr": dom => dom.children.length ? {columns: dom.children.length} : false},
+  tableRow: true
 }
-exports.TableRow = TableRow
+exports.tableRow = tableRow
 
-// ::- A table cell node type.
-class TableCell extends Block {
-  toDOM() { return ["td", 0] }
-  get matchDOMTag() { return {"td": null} }
+// :: NodeSpec
+// A table cell node spec.
+const tableCell = {
+  toDOM() { return ["td", 0] },
+  matchDOMTag: {"td": null}
 }
-exports.TableCell = TableCell
+exports.tableCell = tableCell
+
+function add(obj, props) {
+  let copy = {}
+  for (let prop in obj) copy[prop] = obj[prop]
+  for (let prop in props) copy[prop] = props[prop]
+  return copy
+}
 
 // :: (OrderedMap, string, ?string) → OrderedMap
 // Convenience function for adding table-related node types to a map
@@ -45,9 +52,9 @@ exports.TableCell = TableCell
 // occur inside cells.
 function addTableNodes(nodes, cellContent, tableGroup) {
   return nodes.append({
-    table: {type: Table, content: "table_row[columns=.columns]+", group: tableGroup},
-    table_row: {type: TableRow, content: "table_cell{.columns}"},
-    table_cell: {type: TableCell, content: cellContent}
+    table: add(table, {content: "table_row[columns=.columns]+", group: tableGroup}),
+    table_row: add(tableRow, {content: "table_cell{.columns}"}),
+    table_cell: add(tableCell, {content: cellContent})
   })
 }
 exports.addTableNodes = addTableNodes
@@ -269,7 +276,7 @@ Step.jsonID("removeTableColumn", RemoveColumnStep)
 
 function findRow($pos, pred) {
   for (let d = $pos.depth; d > 0; d--)
-    if ($pos.node(d).type instanceof TableRow && (!pred || pred(d))) return d
+    if ($pos.node(d).type.spec.tableRow && (!pred || pred(d))) return d
   return -1
 }
 

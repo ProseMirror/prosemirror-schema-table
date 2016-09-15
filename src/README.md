@@ -1,9 +1,9 @@
 This module defines schema elements and commands to integrate tables
 in your editor.
 
-@Table
-@TableRow
-@TableCell
+@table
+@tableRow
+@tableCell
 
 Two special [step](#transform.Step) implementations are necessary to
 atomically add or remove columns. You probably don't have to interact
