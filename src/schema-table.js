@@ -1,5 +1,5 @@
 const {Fragment, Slice} = require("prosemirror-model")
-const {Step, StepResult, PosMap, ReplaceStep} = require("prosemirror-transform")
+const {Step, StepResult, StepMap, ReplaceStep} = require("prosemirror-transform")
 const {Selection} = require("prosemirror-state")
 
 // :: NodeSpec
@@ -143,11 +143,11 @@ class AddColumnStep extends Step {
                                   new Slice(Fragment.from(updatedTable), 0, 0))
   }
 
-  posMap() {
+  getMap() {
     let ranges = []
     for (let i = 0; i < this.positions.length; i++)
       ranges.push(this.positions[i], 0, this.cells[i].nodeSize)
-    return new PosMap(ranges)
+    return new StepMap(ranges)
   }
 
   invert(doc) {
@@ -233,11 +233,11 @@ class RemoveColumnStep extends Step {
                                   new Slice(Fragment.from(updatedTable), 0, 0))
   }
 
-  posMap() {
+  getMap() {
     let ranges = []
     for (let i = 0; i < this.from.length; i++)
       ranges.push(this.from[i], this.to[i] - this.from[i], 0)
-    return new PosMap(ranges)
+    return new StepMap(ranges)
   }
 
   invert(doc) {
