@@ -12,12 +12,12 @@ with these directly.
 @AddColumnStep
 @RemoveColumnStep
 
-Some utility functions:
+And some utility functions:
 
 @addTableNodes
 @createTable
 
-And a number of table-related commands:
+And a number of table-related [commands](#commands):
 
 @addColumnBefore
 @addColumnAfter
