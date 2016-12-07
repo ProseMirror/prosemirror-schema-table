@@ -372,7 +372,7 @@ function moveCell(state, dir, onAction) {
     let $cellStart = state.doc.resolve(row.content.offsetAt(newIndex) + $from.start(rowDepth))
     let sel = Selection.findFrom($cellStart, 1)
     if (!sel || sel.from >= $cellStart.end()) return false
-    if (onAction) onAction(sel.action())
+    if (onAction) onAction(sel.scrollAction())
     return true
   } else {
     let rowIndex = $from.index(rowDepth - 1) + dir, table = $from.node(rowDepth - 1)
@@ -380,7 +380,7 @@ function moveCell(state, dir, onAction) {
     let cellStart = dir > 0 ? $from.after(rowDepth) + 2 : $from.before(rowDepth) - 2 - table.child(rowIndex).lastChild.content.size
     let $cellStart = state.doc.resolve(cellStart), sel = Selection.findFrom($cellStart, 1)
     if (!sel || sel.from >= $cellStart.end()) return false
-    if (onAction) onAction(sel.action())
+    if (onAction) onAction(sel.scrollAction())
     return true
   }
 }
