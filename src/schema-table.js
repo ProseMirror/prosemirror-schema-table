@@ -32,6 +32,7 @@ exports.tableRow = tableRow
 // :: NodeSpec
 // A table cell node spec.
 const tableCell = {
+  isolating: true,
   parseDOM: [{tag: "td"}],
   toDOM() { return ["td", 0] }
 }
