@@ -1,6 +1,6 @@
 # prosemirror-schema-table
 
-**NOTE:** This module is deprecated, and won't be supported in the next version of ProseMirror. Consider moving to the [new table module](https://github.com/prosemirror/prosemirror-tables/).
+**NOTE:** This module is deprecated, and doesn't work in current versions of ProseMirror. Consider moving to the [new table module](https://github.com/prosemirror/prosemirror-tables/).
 
 [ [**WEBSITE**](http://prosemirror.net) | [**ISSUES**](https://github.com/prosemirror/prosemirror/issues) | [**FORUM**](https://discuss.prosemirror.net) | [**GITTER**](https://gitter.im/ProseMirror/prosemirror) | [**CHANGELOG**](https://github.com/ProseMirror/prosemirror/blob/master/CHANGELOG.md) ]
 
@@ -15,10 +15,6 @@ editor.
 The [project page](http://prosemirror.net) has more information, a
 number of [demos](http://prosemirror.net/#demos) and the
 [documentation](http://prosemirror.net/docs.html).
-
-**NOTE:** This project is in *BETA* stage. It isn't thoroughly tested,
-and the API might still change across `0.x` releases. You are welcome
-to use it, but don't expect it to be very stable yet.
 
 This code is released under an
 [MIT license](https://github.com/prosemirror/prosemirror/tree/master/LICENSE).
